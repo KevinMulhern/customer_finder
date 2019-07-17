@@ -16,6 +16,8 @@ module CustomerFinder
 
     private
 
+    attr_reader :latitude, :longitude, :radius
+
     def customer_values
       all_customers.map(&:value)
     end
@@ -24,6 +26,10 @@ module CustomerFinder
       @all_customers ||= JSON.parse(File.read('people.json')).map do |customer|
         Customer.new(customer)
       end
+    end
+
+    def location
+      Location.new(latitude: latitude, longitude: longitude)
     end
   end
 end

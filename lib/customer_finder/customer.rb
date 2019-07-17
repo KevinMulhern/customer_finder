@@ -5,6 +5,7 @@ module CustomerFinder
     attribute :country, Types::String
     attribute :email, Types::String
     attribute :id, Types::String
+    attribute :location, CustomerFinder::Location
     attribute :value, Types::Coercible::Float
 
     attribute :name do

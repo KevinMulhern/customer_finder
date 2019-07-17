@@ -9,8 +9,9 @@ module CustomerFinder
         country: 'england',
         email: 'johndoe@gmail.com',
         id: '5a00487898a445517663540a',
-        name: { 'first' => 'John', 'last' => 'Doe' },
+        name: { first: 'John', last: 'Doe' },
         value: '2500.0',
+        location: { latitude: '51.077801', longitude: '-3.082931' }
       }
     end
 
@@ -29,6 +30,12 @@ module CustomerFinder
     describe '#id' do
       it 'returns the customers id' do
         expect(customer.id).to eql('5a00487898a445517663540a')
+      end
+    end
+
+    describe 'location' do
+      it 'returns the customers location' do
+        expect(customer.location).to be_an_instance_of(Location)
       end
     end
 
