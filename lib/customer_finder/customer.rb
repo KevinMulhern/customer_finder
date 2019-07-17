@@ -15,7 +15,7 @@ module CustomerFinder
       attribute :last, Types::String
     end
 
-    def as_json
+    def as_hash
       {
         email: email,
         id: id,
@@ -26,6 +26,10 @@ module CustomerFinder
 
     def full_name
       "#{name.first} #{name.last}"
+    end
+
+    def within_range?(region_location, radius)
+      location.distance_to(region_location) <= radius
     end
   end
 end

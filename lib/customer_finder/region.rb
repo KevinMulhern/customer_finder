@@ -7,11 +7,11 @@ module CustomerFinder
     end
 
     def customers
-      JSON.generate(all_customers.map(&:as_json))
+      JSON.generate(occupying_customers.map(&:as_hash))
     end
 
     def average_customer_value
-      customer_values.reduce(0, &:+).to_f / all_customers.size
+      customer_values.reduce(0, &:+).to_f / occupying_customers.size
     end
 
     private
@@ -19,7 +19,13 @@ module CustomerFinder
     attr_reader :latitude, :longitude, :radius
 
     def customer_values
-      all_customers.map(&:value)
+      occupying_customers.map(&:value)
+    end
+
+    def occupying_customers
+      all_customers.select do |customer|
+        customer.within_range?(location, radius)
+      end
     end
 
     def all_customers

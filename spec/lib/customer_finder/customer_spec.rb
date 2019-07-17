@@ -55,9 +55,47 @@ module CustomerFinder
       end
     end
 
+    describe '#as_hash' do
+      let(:customer_hash) do
+        {
+          email: 'johndoe@gmail.com',
+          id: '5a00487898a445517663540a',
+          name: 'John Doe',
+          value: 2500.0,
+        }
+      end
+
+      it 'returns selected customer details in a hash' do
+        expect(customer.as_hash).to eql(customer_hash)
+      end
+    end
+
     describe '#full_name' do
       it 'returns the customers full name' do
         expect(customer.full_name).to eql('John Doe')
+      end
+    end
+
+    describe '#within_range?' do
+      let(:region_location) { instance_double(Location) }
+      let(:radius) { 200 }
+      let(:distance) { 100 }
+
+      before do
+        allow(customer.location).to receive(:distance_to).
+          with(region_location).and_return(distance)
+      end
+
+      it 'returns true' do
+        expect(customer.within_range?(region_location, radius)).to be(true)
+      end
+
+      context 'when the distance is larger than the radius' do
+        let(:distance) { 300 }
+
+        it 'returns false' do
+          expect(customer.within_range?(region_location, radius)).to be(false)
+        end
       end
     end
   end
