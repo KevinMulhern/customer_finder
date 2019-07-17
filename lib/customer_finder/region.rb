@@ -7,17 +7,23 @@ module CustomerFinder
     end
 
     def customers
-      JSON.parse(File.read('people.json'))
+      JSON.generate(all_customers.map(&:as_json))
     end
 
     def average_customer_value
-      customer_values.reduce(0, &:+).to_f / customers.size
+      customer_values.reduce(0, &:+).to_f / all_customers.size
     end
 
     private
 
     def customer_values
-      customers.map { |customer| customer.fetch('value') }
+      all_customers.map(&:value)
+    end
+
+    def all_customers
+      @all_customers ||= JSON.parse(File.read('people.json')).map do |customer|
+        Customer.new(customer)
+      end
     end
   end
 end
