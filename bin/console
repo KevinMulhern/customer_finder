@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require './lib/customer_finder'
+
+require 'irb'
+IRB.start
