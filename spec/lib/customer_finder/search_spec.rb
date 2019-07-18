@@ -59,10 +59,10 @@ module CustomerFinder
         expect(search.results).to eql([customer_three, customer_two])
       end
 
-      context 'when an accending sort order is requested' do
+      context 'when accending sort order is selected' do
         let(:sort) { { order: 'asc' } }
 
-        it 'returns sorted customer search results' do
+        it 'returns sorted by ascending customer search results' do
           expect(search.results).to eql([customer_two, customer_three])
         end
       end

@@ -58,7 +58,7 @@ module CustomerFinder
         "[{\"name\":\"Joe Bloggs\"},{\"name\":\"John Smith\"},{\"name\":\"Bob Ross\"}]"
       end
 
-      it 'returns customers' do
+      it 'returns customers in region' do
         expect(region.customers).to eql(customers)
       end
     end

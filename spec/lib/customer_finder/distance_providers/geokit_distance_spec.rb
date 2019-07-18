@@ -28,7 +28,7 @@ module CustomerFinder
       end
 
       describe '#calculate' do
-        it 'returns the distnace between the locations in kilometers' do
+        it 'returns the distance between the locations in kilometers' do
           expect(geokit_distance.calculate).to eql(200)
         end
       end

@@ -25,6 +25,7 @@ module CustomerFinder
       let(:configuration) do
         instance_double(Configuration, distance_provider: distance_provider)
       end
+
       before do
         allow(Configuration).to receive(:instance).and_return(configuration)
         allow(distance_provider).to receive(:between).

@@ -1,6 +1,5 @@
 module CustomerFinder
   class Customers
-
     def initialize;end
 
     def self.all
