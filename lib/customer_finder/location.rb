@@ -6,7 +6,13 @@ module CustomerFinder
     attribute :longitude, Types::Coercible::Float
 
     def distance_to(other_location)
-      HaversineDistance.between(origin: self, destination: other_location)
+      distance_provider.between(origin: self, destination: other_location)
+    end
+
+    private
+
+    def distance_provider
+      Configuration.instance.distance_provider
     end
   end
 end
