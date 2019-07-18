@@ -20,9 +20,14 @@ module CustomerFinder
 
     describe '#distance_to' do
       let(:other_location) { instance_double(Location) }
+      let(:distance_provider) { double('DistanceProvider') }
 
+      let(:configuration) do
+        instance_double(Configuration, distance_provider: distance_provider)
+      end
       before do
-        allow(HaversineDistance).to receive(:between).
+        allow(Configuration).to receive(:instance).and_return(configuration)
+        allow(distance_provider).to receive(:between).
           with(origin: location, destination: other_location).and_return(300)
       end
 

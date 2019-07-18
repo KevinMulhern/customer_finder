@@ -10,6 +10,10 @@ RSpec.describe 'Region Customers' do
     )
   end
 
+  before do
+    CustomerFinder::Configuration.instance.customer_file_path = 'people.json'
+  end
+
   it 'returns customers 100km from bristol' do
     expect(JSON.parse(region.customers).size).to eql(20)
   end
