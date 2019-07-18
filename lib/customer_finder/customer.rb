@@ -24,12 +24,20 @@ module CustomerFinder
       }
     end
 
-    def full_name
-      "#{name.first} #{name.last}"
+    def match?(filters)
+      filters.all? do |filter, filter_value|
+        self.send(filter.to_sym) == filter_value
+      end
     end
 
     def within_range?(region_location, radius)
       location.distance_to(region_location) <= radius
+    end
+
+    private
+
+    def full_name
+      "#{name.first} #{name.last}"
     end
   end
 end

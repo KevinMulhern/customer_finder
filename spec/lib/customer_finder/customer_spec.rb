@@ -70,12 +70,6 @@ module CustomerFinder
       end
     end
 
-    describe '#full_name' do
-      it 'returns the customers full name' do
-        expect(customer.full_name).to eql('John Doe')
-      end
-    end
-
     describe '#within_range?' do
       let(:region_location) { instance_double(Location) }
       let(:radius) { 200 }
@@ -95,6 +89,22 @@ module CustomerFinder
 
         it 'returns false' do
           expect(customer.within_range?(region_location, radius)).to be(false)
+        end
+      end
+    end
+
+    describe '#match?' do
+      let(:filters) { { country: 'england' } }
+
+      it 'returns true' do
+        expect(customer.match?(filters)).to be(true)
+      end
+
+      context 'when a filter does not match' do
+        let(:filters) { { country: 'england', email: 'janedoe@gmail.com' } }
+
+        it 'returns false' do
+          expect(customer.match?(filters)).to be(false)
         end
       end
     end

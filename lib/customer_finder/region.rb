@@ -1,37 +1,43 @@
 module CustomerFinder
   class Region
-    def initialize(latitude:, longitude:, radius:)
+    def initialize(latitude:, longitude:, radius:, options: {})
       @latitude = latitude
       @longitude = longitude
       @radius = radius
+      @options = options
     end
 
     def customers
-      JSON.generate(occupying_customers.map(&:as_hash))
+      JSON.generate(customer_search.results.map(&:as_hash))
     end
 
     def average_customer_value
-      customer_values.reduce(0, &:+).to_f / occupying_customers.size
+      (customer_values.reduce(&:+).to_f / customer_search.results.size).round(2)
     end
 
     private
 
-    attr_reader :latitude, :longitude, :radius
+    attr_reader :latitude, :longitude, :radius, :options
 
     def customer_values
-      occupying_customers.map(&:value)
+      customer_search.results.map(&:value)
     end
 
-    def occupying_customers
-      all_customers.select do |customer|
-        customer.within_range?(location, radius)
-      end
+    def customer_search
+      Search.new(
+        location: location,
+        radius: radius,
+        filters: filters,
+        sort: sort
+      )
     end
 
-    def all_customers
-      @all_customers ||= JSON.parse(File.read('people.json')).map do |customer|
-        Customer.new(customer)
-      end
+    def filters
+      options.fetch(:filters, {})
+    end
+
+    def sort
+      options.fetch(:sort, {})
     end
 
     def location
