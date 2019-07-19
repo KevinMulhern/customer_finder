@@ -28,7 +28,7 @@ module CustomerFinder
     end
 
     def customers
-      Customers.all
+      @customers ||= Customers.all
     end
 
     def sort_field

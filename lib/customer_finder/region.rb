@@ -24,7 +24,7 @@ module CustomerFinder
     end
 
     def customer_search
-      Search.new(
+      @customer_search ||= Search.new(
         location: location,
         radius: radius,
         filters: filters,
